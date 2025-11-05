@@ -1,3 +1,5 @@
+# finetune_cyrillic_ocr_v3.yml
+
 _base_:
   - ./multi_language/cyrillic_PP-OCRv3_mobile_rec.yml
 
@@ -57,7 +59,7 @@ Train:
   dataset:
     name: SimpleDataSet
     data_dir: ../ocr_pipeline_project/data/processed/
-    label_file_list: ["../ocr_pipeline_project/data/processed/eval_labels.txt"]
+    label_file_list: ["../ocr_pipeline_project/data/processed/train_labels.txt"]
     transforms:
     - DecodeImage:
         img_mode: BGR
@@ -80,6 +82,7 @@ Train:
         - valid_ratio
   loader:
     shuffle: true
+    drop_last: true # --- ДОБАВЛЕНА ЭТА СТРОКА ---
     batch_size_per_card: 128 
     num_workers: 4
   
