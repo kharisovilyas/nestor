@@ -1,0 +1,9 @@
+paddlepaddle
+paddleocr
+pdf2image
+numpy
+Pillow
+scikit-image
+albumentations
+lmdb
+rapidfuzz
