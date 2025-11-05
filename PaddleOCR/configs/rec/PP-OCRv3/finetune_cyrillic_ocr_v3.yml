@@ -82,8 +82,8 @@ Train:
         - valid_ratio
   loader:
     shuffle: true
-    drop_last: true # --- ДОБАВЛЕНА ЭТА СТРОКА ---
-    batch_size_per_card: 128 
+    drop_last: true
+    batch_size_per_card: 3
     num_workers: 4
   
 Eval:
