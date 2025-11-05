@@ -65,8 +65,8 @@ Optimizer:
 Train:
   dataset:
     name: SimpleDataSet
-    data_dir: ../../ocr_pipeline_project/data/processed/
-    label_file_list: ["../../ocr_pipeline_project/data/processed/train_labels.txt"]
+    data_dir: ../ocr_pipeline_project/data/processed/
+    label_file_list: ["../ocr_pipeline_project/data/processed/train_labels.txt"]
     transforms:
     - DecodeImage: {img_mode: BGR, channel_first: false}
     - RecConAug: {prob: 0.5, ext_data_num: 2, image_shape: [48, 320, 3]}
@@ -83,8 +83,8 @@ Train:
 Eval:
   dataset:
     name: SimpleDataSet
-    data_dir: ../../ocr_pipeline_project/data/processed/
-    label_file_list: ["../../ocr_pipeline_project/data/processed/eval_labels.txt"]
+    data_dir: ../ocr_pipeline_project/data/processed/
+    label_file_list: ["../ocr_pipeline_project/data/processed/eval_labels.txt"]
     transforms:
     - DecodeImage: {img_mode: BGR, channel_first: false}
     - MultiLabelEncode: {max_text_length: 25}
