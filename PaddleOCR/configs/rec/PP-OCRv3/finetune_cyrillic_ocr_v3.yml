@@ -50,64 +50,48 @@ Global:
   epoch_num: 100
   eval_batch_step: [0, 200]
 
+# --- ПОЛНАЯ И ИСПРАВЛЕННАЯ СЕКЦИЯ OPTIMIZER ---
 Optimizer:
+  name: Adam
+  beta1: 0.9
+  beta2: 0.999
   lr:
     name: Cosine
     learning_rate: 0.0001
+  regularizer:
+    name: L2
+    factor: 3.0e-05
 
 Train:
   dataset:
     name: SimpleDataSet
-    data_dir: ../ocr_pipeline_project/data/processed/
-    label_file_list: ["../ocr_pipeline_project/data/processed/train_labels.txt"]
+    data_dir: ../../ocr_pipeline_project/data/processed/
+    label_file_list: ["../../ocr_pipeline_project/data/processed/train_labels.txt"]
     transforms:
-    - DecodeImage:
-        img_mode: BGR
-        channel_first: false
-    - RecConAug:
-        prob: 0.5
-        ext_data_num: 2
-        image_shape: [48, 320, 3]
+    - DecodeImage: {img_mode: BGR, channel_first: false}
+    - RecConAug: {prob: 0.5, ext_data_num: 2, image_shape: [48, 320, 3]}
     - RecAug:
-    - MultiLabelEncode:
-        max_text_length: 25
-    - RecResizeImg:
-        image_shape: [3, 48, 320]
-    - KeepKeys:
-        keep_keys:
-        - image
-        - label_ctc
-        - label_sar
-        - length
-        - valid_ratio
+    - MultiLabelEncode: {max_text_length: 25}
+    - RecResizeImg: {image_shape: [3, 48, 320]}
+    - KeepKeys: {keep_keys: ['image', 'label_ctc', 'label_sar', 'length', 'valid_ratio']}
   loader:
     shuffle: true
-    drop_last: true
+    drop_last: true 
     batch_size_per_card: 3
     num_workers: 4
   
 Eval:
   dataset:
     name: SimpleDataSet
-    data_dir: ../ocr_pipeline_project/data/processed/
-    label_file_list: ["../ocr_pipeline_project/data/processed/eval_labels.txt"]
+    data_dir: ../../ocr_pipeline_project/data/processed/
+    label_file_list: ["../../ocr_pipeline_project/data/processed/eval_labels.txt"]
     transforms:
-    - DecodeImage:
-        img_mode: BGR
-        channel_first: false
-    - MultiLabelEncode:
-        max_text_length: 25
-    - RecResizeImg:
-        image_shape: [3, 48, 320]
-    - KeepKeys:
-        keep_keys:
-        - image
-        - label_ctc
-        - label_sar
-        - length
-        - valid_ratio
+    - DecodeImage: {img_mode: BGR, channel_first: false}
+    - MultiLabelEncode: {max_text_length: 25}
+    - RecResizeImg: {image_shape: [3, 48, 320]}
+    - KeepKeys: {keep_keys: ['image', 'label_ctc', 'label_sar', 'length', 'valid_ratio']}
   loader:
     shuffle: false
     drop_last: false
-    batch_size_per_card: 128
+    batch_size_per_card: 3
     num_workers: 4
