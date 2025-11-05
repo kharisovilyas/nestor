@@ -1,0 +1,35 @@
+_base_:
+  - ./multi_language/cyrillic_PP-OCRv3_mobile_rec.yml
+
+Global:
+  pretrained_model: ./pretrain_models/ru_PP-OCRv3_rec_train/best_accuracy
+  
+  save_model_dir: ./output/cyrillic_tuned_recognizer/
+  
+  epoch_num: 100
+  eval_batch_step: [0, 200]
+
+Optimizer:
+  lr:
+    name: Cosine
+    learning_rate: 0.0001
+
+Train:
+  dataset:
+    name: SimpleDataSet
+    data_dir: ../ocr_pipeline_project/data/processed/
+    label_file_list: ["../ocr_pipeline_project/data/processed/train_labels.txt"]
+  loader:
+    shuffle: true
+    batch_size_per_card: 64
+    num_workers: 4
+  
+Eval:
+  dataset:
+    name: SimpleDataSet
+    data_dir: ../ocr_pipeline_project/data/processed/
+    label_file_list: ["../ocr_pipeline_project/data/processed/eval_labels.txt"]
+  loader:
+    shuffle: false
+    batch_size_per_card: 64
+    num_workers: 4
