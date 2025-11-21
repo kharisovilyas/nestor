@@ -3,14 +3,13 @@ import os
 import sys
 import time
 
-# Убедимся, что Python видит нашу папку src
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
-from ocr_service import OCRService
+# --- ИСПРАВЛЕННЫЙ ИМПОРТ ---
+# Теперь мы явно говорим Python заглянуть в папку 'src'
+from src.ocr_service import OCRService
 
 DEFAULT_MODEL_DIR = "../PaddleOCR/output/cyrillic_tuned_recognizer/"
 
 def create_argument_parser():
-    # ... (здесь ничего не меняется)
     parser = argparse.ArgumentParser(
         description="Консольное приложение для распознавания текста в PDF-файлах.",
         formatter_class=argparse.RawTextHelpFormatter
@@ -35,7 +34,7 @@ def main():
     else:
         if not os.path.exists(args.model_dir):
             print(f"[!] Ошибка: Папка с дообученной моделью не найдена: {args.model_dir}")
-            print("[!] Совет: Убедитесь, что вы провели обучение, или используйте флаг --use_default_model.")
+            print(f"[!] Совет: Убедитесь, что вы провели обучение, или используйте флаг --use_default_model.")
             sys.exit(1)
         model_path_to_load = args.model_dir
         print(f"[*] Режим: используется дообученная модель из '{model_path_to_load}'.")
@@ -44,7 +43,6 @@ def main():
         print("\n[*] Загрузка OCR модели... Это может занять некоторое время.")
         start_time = time.time()
         
-        # --- ИСПРАВЛЕНО ЗДЕСЬ ---
         extractor = OCRService(recognition_model_path=model_path_to_load)
         
         load_time = time.time() - start_time
